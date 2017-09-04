@@ -10,9 +10,9 @@
 
 #include<cstdio>
 #include<cstdlib>
-#include<cstring>           // UPDATE: period refresh (show POS) | AI |
+#include<cstring>  
 #include<termio.h>
-                        // no: regret
+                  
 #define CHESS    5
 #define CELLSLEN 9
 #define BOARD (CELLSLEN*2+1)
@@ -21,19 +21,18 @@ void envir();
 void print();
 int Icon();
 int checkchess();
-int getch();        /// LINUX
+int getch();       
 
 const char* board[BOARD][BOARD]={0};
 int check[CELLSLEN][CELLSLEN]={0};
-int turn=-1;                    /// -1==white  1==black
-int row=1, col=1,  con;
+int turn=-1;      // -1==white  1==black
+int row=1, col=1, con;
 
 const char * BLACK="○",  * WHITE ="●",   * POS  ="¤";
 const char * LT   ="┌",  * TOP   ="┬",   * RT   ="┐";
 const char * LEFT ="├",  * CENTER="┼",   * RIGHT="┤";
 const char * LF   ="└",  * FOOT  ="┴",   * RF   ="┘";
 const char * SPACE=" ";
-//#include <stdio.h>
 
 int main(void)
 {
@@ -72,10 +71,9 @@ void envir()
 
 void print()
 {
-    system("clear");                                        /// BUG 2 boards   no"reset"
-    for(int j=0;j<BOARD;j++){               /// columns
-        for(int k=0;k<BOARD;k++)            /// rows
-            //puts(board[j][k]);
+    system("clear");                        // BUG 2 boards   no"reset"
+    for(int j=0;j<BOARD;j++){               // columns
+        for(int k=0;k<BOARD;k++)            // rows
             printf("%s ",board[j][k]);
         putchar('\n');
     }
@@ -120,39 +118,39 @@ int checkchess()
 {
     bool judge;
     int  pres;
-    for(int j=0;j<CELLSLEN;j++)        /// check rows || columns
+    for(int j=0;j<CELLSLEN;j++)        // check rows || columns
         for(int k=0;k<CELLSLEN;k++)
             if(check[j][k]!=0){
                 pres=check[j][k];
                 judge=true;
-                if(j<=CELLSLEN-CHESS && k<=CELLSLEN-CHESS){             /// should contain '='
+                if(j<=CELLSLEN-CHESS && k<=CELLSLEN-CHESS){             // should contain '='
                     for(int l=1;l<CHESS;l++)
-                        if(check[j+l][k+l]!=pres) judge=false;          ///oblique right
+                        if(check[j+l][k+l]!=pres) judge=false;          //oblique right
                     if(judge==true) return 1;
                 }
                 judge=true;
                 if(j<=CELLSLEN-CHESS && k>=CHESS-1){
                     for(int l=1;l<CHESS;l++)
-                        if(check[j+l][k-l]!=pres) judge=false;          ///oblique left
+                        if(check[j+l][k-l]!=pres) judge=false;          //oblique left
                     if(judge==true) return 1;
                 }
                 judge=true;
                 if(k<=CELLSLEN-CHESS){
                     for(int l=1;l<CHESS;l++)
-                        if(check[j][k+l]!=pres) judge=false;            ///horizontal
+                        if(check[j][k+l]!=pres) judge=false;            //horizontal
                     if(judge==true) return 1;
                 }
                 judge=true;
                 if(j<=CELLSLEN-CHESS){
                     for(int l=1;l<CHESS;l++)
-                        if(check[j+l][k]!=pres) judge=false;            ///vertical
+                        if(check[j+l][k]!=pres) judge=false;            //vertical
                     if(judge==true) return 1;
                 }
             }
     return 0;
 }
 
-int getch()                             ///LINUX special demand
+int getch()                           
 {
     struct termios tm,tm_old;
     int fd=0,ch;
